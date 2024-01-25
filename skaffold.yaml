@@ -6,10 +6,13 @@ manifests:
 deploy:
   kubectl: {}
 build:
-  local:
-    push: false
+  # local:
+  #   push: false
+  googleCloudBuild:
+    projectId: k8lab-394905
   artifacts:
-    - image: nightofserenity/auth
+    # - image: nightofserenity/auth
+    - image: us.gcr.io/k8lab-394905/auth
       context: auth
       docker:
         dockerfile: Dockerfile

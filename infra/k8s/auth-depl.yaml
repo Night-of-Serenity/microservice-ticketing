@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: auth
-          image: nightofserenity/auth
-
+          # image: nightofserenity/auth
+          image: us.gcr.io/k8lab-394905/auth
 ---
 apiVersion: v1
 kind: Service
