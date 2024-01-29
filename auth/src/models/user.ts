@@ -21,16 +21,30 @@ interface UserDoc extends mongoose.Document {
   password: string;
 }
 
-const userSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: true,
+const userSchema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
   },
-  password: {
-    type: String,
-    required: true,
-  },
-});
+  {
+    // transform doc format with JSON.stringify e.g. delete unwanted field, modified _id field
+    toJSON: {
+      transform(doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.password;
+        // delete ret.__v;
+      },
+      versionKey: false,
+    },
+  }
+);
 
 // middleware of mongodb to process some logic before save, callback can't be arrow function
 // because it won't work with this. must end with done to end process
