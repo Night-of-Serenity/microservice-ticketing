@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { Password } from "../services/password";
 
 // An interface taht describes the properties
 // that are required to create a new User
@@ -29,6 +30,16 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+});
+
+// middleware of mongodb to process some logic before save, callback can't be arrow function
+// because it won't work with this. must end with done to end process
+userSchema.pre("save", async function (done) {
+  if (this.isModified("password")) {
+    const hashed = await Password.toHash(this.get("password"));
+    this.set("password", hashed);
+  }
+  done();
 });
 
 // use method build instead of new User for create new instance of User for apply typescript
