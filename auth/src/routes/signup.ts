@@ -30,7 +30,7 @@ router.post(
 
     const user = User.build({ email, password });
     await user.save();
-    console.log({ user });
+    // console.log({ user });
 
     const userJwt = jwt.sign(
       {
@@ -40,7 +40,7 @@ router.post(
       process.env.JWT_KEY! // '!' tell typescript that this variable already varify
     );
 
-    console.log("session:", req.session);
+    // console.log("session:", req.session);
     // Store it on session object
     req.session = {
       jwt: userJwt,
