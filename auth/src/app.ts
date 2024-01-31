@@ -17,7 +17,7 @@ app.use(json());
 app.use(
   cookieSession({
     signed: false, // no encrpyt so it work with many language backend
-    secure: true, // required https
+    secure: process.env.NODE_ENV !== "test", // required https, set false when in test environment
   })
 );
 

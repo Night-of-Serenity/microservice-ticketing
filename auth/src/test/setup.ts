@@ -5,10 +5,13 @@ import { app } from "../app";
 let mongo: any;
 // connect db server
 beforeAll(async () => {
+  process.env.JWT_KEY = "asdfg";
+
   mongo = await MongoMemoryServer.create();
+
   const mongoUri = mongo.getUri();
 
-  console.log({ mongoUri });
+  // console.log({ mongoUri });
 
   await mongoose.connect(mongoUri, {});
 });
@@ -24,6 +27,8 @@ beforeEach(async () => {
 
 // close db server
 afterAll(async () => {
-  await mongo.stop();
+  if (mongo) {
+    await mongo.stop();
+  }
   await mongoose.connection.close();
 });
